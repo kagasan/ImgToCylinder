@@ -2,11 +2,41 @@
 <head>
 <meta charset="utf-8">
 <title>test</title>
+<script src="stl.js"></script>
 <script src="script.js"></script>
 </head>
 <body>
-a
-<input type="file" id="selectfile" accept='image/*'>
-<div id="output"></div>
+<h1>ImgToCylinder</h1>
+画像から円柱3Dデータ(実際は多角柱)をSTL形式で出力します．
+<hr>
+<b>使い方</b><br>
+パラメータを適当に設定してから画像ファイルを読み込む．<br>
+出力されたデータを"○○.stl"に保存もしくはダウンロードして，適当なビューワで開く．<br>
+分割数に応じてメッシュの計算時間が増えます!!<br>
+<hr>
+<b>ファイル選択</b><br>
+<input type="file" id="selectfile" accept='image/*'><br>
+<hr>
+<form name='fm'>
+<b>設定</b><br>
+閾値<input name="sh" type='text' value='128'/><br>
+画像を横に分割する数<input name="wsp" type='text' value='100'/><br>
+画像を縦に分割する数<input name="hsp" type='text' value='100'/><br>
+円柱の縦の長さ<input name="lng" type='text' value='2000'/><br>
+長方形穴の横の長さ<input name="rw" type='text' value='10'/><br>
+長方形穴の縦の長さ<input name="rh" type='text' value='10'/><br>
+長方形穴の深さ<input name="dep" type='text' value='10'/><br>
+<hr>
+<b>出力</b><br>
+<textarea name='para'  rows="5" cols="40">
+ここにいくつかのパラメータが生まれる
+</textarea><br>
+<textarea name='ta'  rows="5" cols="40">
+ここにstlファイルが生まれるハズ
+</textarea><br>
+</form>
+<a id="download" href="#" download="download.stl" onclick="DL()">ダウンロード</a>
+<div id="output"></div><br>
+<canvas id="canvas"></canvas>
 </body>
 </html>
