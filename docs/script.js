@@ -62,11 +62,24 @@ var MakeCylinder =function(src, width, height){
 				stl.add_p_quad(p_roty([[p0x,y1,p0z],[p0x,y2,p0z],[ax,y1,az]],angle*i));
 				stl.add_p_quad(p_roty([[bx,y1,bz],[bx,y2,bz],[p1x,y1,p1z]],angle*i));
 				
-				stl.add_p_quad(p_roty([[a2x,y1,a2z],[a2x,y2,a2z],[b2x,y1,b2z]],angle*i));
-				stl.add_p_quad(p_roty([[a2x,y1,a2z],[b2x,y1,b2z],[ax,y1,az]],angle*i));
-				stl.add_p_quad(p_roty([[a2x,y2,a2z],[ax,y2,az],[b2x,y2,b2z]],angle*i));
-				stl.add_p_quad(p_roty([[a2x,y1,a2z],[ax,y1,az],[a2x,y2,a2z]],angle*i));
-				stl.add_p_quad(p_roty([[b2x,y2,b2z],[bx,y2,bz],[b2x,y1,b2z]],angle*i));
+				//stl.add_p_quad(p_roty([[ax,y1,az],[ax,y2,az],[bx,y1,bz]],angle*i));
+				
+				
+				stl.add_p_tri(p_roty([[a2x,y1,a2z],[a2x,y2,a2z],[b2x,y1,b2z]],angle*i));
+				stl.add_p_tri(p_roty([[b2x,y2,b2z],[b2x,y1,b2z],[a2x,y2,a2z]],angle*i));
+				
+				stl.add_p_tri(p_roty([[a2x,y1,a2z],[b2x,y1,b2z],[ax,y1,az]],angle*i));
+				stl.add_p_tri(p_roty([[bx,y1,bz],[ax,y1,az],[b2x,y1,b2z]],angle*i));
+				
+				stl.add_p_tri(p_roty([[a2x,y2,a2z],[ax,y2,az],[b2x,y2,b2z]],angle*i));
+				stl.add_p_tri(p_roty([[bx,y2,bz],[b2x,y2,b2z],[ax,y2,az]],angle*i));
+				
+				stl.add_p_tri(p_roty([[a2x,y1,a2z],[ax,y1,az],[a2x,y2,a2z]],angle*i));
+				stl.add_p_tri(p_roty([[ax,y2,az],[a2x,y2,a2z],[ax,y1,az]],angle*i));
+				
+				stl.add_p_tri(p_roty([[b2x,y2,b2z],[bx,y2,bz],[b2x,y1,b2z]],angle*i));
+				stl.add_p_tri(p_roty([[bx,y1,bz],[b2x,y1,b2z],[bx,y2,bz]],angle*i));
+				
 			}
 			else{
 				stl.add_p_quad(p_roty([[p0x,y0,p0z],[p0x,y3,p0z],[p1x,y0,p1z]],angle*i));
