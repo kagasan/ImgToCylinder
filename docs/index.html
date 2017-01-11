@@ -13,16 +13,18 @@
 パラメータを適当に設定してから画像ファイルを読み込む．<br>
 出力されたデータを"○○.stl"に保存もしくはダウンロードして，適当なビューワで開く．<br>
 分割数に応じてメッシュの計算時間が増えます!!<br>
+画像には円柱の表面の形状に応じて余白が追加されます．<br>
+余白部分も含めて分割して穴を空けるか計算します．<br>
 <hr>
 <b>ファイル選択</b><br>
 <input type="file" id="selectfile" accept='image/*'><br>
 <hr>
 <form name='fm'>
 <b>設定</b><br>
-閾値<input name="sh" type='text' value='128'/><br>
-画像を横に分割する数<input name="wsp" type='text' value='100'/><br>
-画像を縦に分割する数<input name="hsp" type='text' value='100'/><br>
+円柱分割数(横)<input name="wsp" type='text' value='100'/><br>
+円柱分割数(縦)<input name="hsp" type='text' value='100'/><br>
 円柱の縦の長さ<input name="lng" type='text' value='2000'/><br>
+円柱の半径<input name="rad" type='text' value='400'/><br>
 長方形穴の横の長さ<input name="rw" type='text' value='10'/><br>
 長方形穴の縦の長さ<input name="rh" type='text' value='10'/><br>
 長方形穴の深さ<input name="dep" type='text' value='10'/><br>

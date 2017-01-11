@@ -2,7 +2,7 @@ var MakeCylinder =function(src, width, height){
 	var form = document.forms.fm;
 	var stl = new STL("Cylinder");//STLクラス
 	
-	var sh = parseFloat(form.sh.value);//しきい値
+	var sh = 128;//しきい値
 	var wsp = parseFloat(form.wsp.value);//画像横分割数
 	var hsp = parseFloat(form.hsp.value);//画像縦分割数
 	var lng = parseFloat(form.lng.value);//円柱縦長さ
@@ -10,7 +10,7 @@ var MakeCylinder =function(src, width, height){
 	var rh = parseFloat(form.rh.value);//長方形穴縦長さ
 	var dep = parseFloat(form.dep.value);//長方形穴深さ
 	
-	var rd = lng * width / (Math.PI*2*height);//半径
+	var rd = parseFloat(form.rad.value);//半径
 	var angle = Math.PI*2/wsp;//角度
 	
 	//dep=rd/10;
@@ -33,9 +33,8 @@ var MakeCylinder =function(src, width, height){
 	var p1x = rd*Math.cos(angle);
 	var p1z = rd*Math.sin(angle);
 	
-	form.para.value="半径："+rd+"\n";
-	form.para.value+="分割横サイズ："+rd*Math.sqrt(2*(1-Math.cos(angle)))+"\n";
-	form.para.value+="分割縦サイズ："+lng/hsp+"\n";
+	form.para.value+="分割された1グリッドの横サイズ："+rd*Math.sqrt(2*(1-Math.cos(angle)))+"\n";
+	form.para.value+="分割された1グリッドの縦サイズ："+lng/hsp+"\n";
 	
 	for(var i=0;i<wsp;i++){
 		stl.add_p_tri(p_roty([[0,0,0],[rd,0,0],[rd*Math.cos(angle),0,rd*Math.sin(angle)]] ,angle*i));
@@ -100,17 +99,43 @@ window.addEventListener("DOMContentLoaded", function(){
 		reader.onload = function(){
 			img = new Image();
 			img.onload = function(){
-				var context = canvas.getContext('2d');
-				var width = img.width;
-				var height = img.height;
-				canvas.width = width;
-				canvas.height = height;
-				context.drawImage(img, 0, 0);
-				var srcData = context.getImageData(0, 0, width, height);
+				var form = document.forms.fm;
+				var lng = parseFloat(form.lng.value);//円柱縦長さ
+				var rad = parseFloat(form.rad.value);//円柱半径
+				var cir = 2.0*rad*Math.PI;//円周
+				
+				var ctx = canvas.getContext('2d');
+				var iw = img.width;
+				var ih = img.height;
+				var cw = iw;
+				var ch = ih;
+				
+				if(cir*ih/lng>iw){
+					cw = parseInt(cir*ih/lng);
+				}
+				else{
+					ch = parseInt(lng*iw/cir);
+				}
+				form.para.value="";
+				form.para.value+="入力画像サイズ(横):"+iw+"\n";
+				form.para.value+="入力画像サイズ(縦):"+ih+"\n";
+				form.para.value+="余白追加後画像サイズ(横):"+cw+"\n";
+				form.para.value+="余白追加後画像サイズ(縦):"+ch+"\n";
+				
+				canvas.width = cw;
+				canvas.height = ch;
+				
+				ctx.fillStyle = "rgb(255,255,255)";
+				ctx.fillRect(0,0,cw,ch);
+				ctx.drawImage(img, cw/2-iw/2, ch/2-ih/2);
+				
+				
+				var srcData = ctx.getImageData(0, 0, cw, ch);
 				var src = srcData.data;
-				MakeCylinder(src, width, height);
-				//ImageProcessing(src, width, height);
-				context.putImageData(srcData, 0, 0);
+				
+				MakeCylinder(src, cw, ch);
+				
+				ctx.putImageData(srcData, 0, 0);
 				var dataurl = canvas.toDataURL();
 				document.getElementById("output").innerHTML = "<img src='" + dataurl + "'>";
 			}
